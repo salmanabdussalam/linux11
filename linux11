@@ -19,10 +19,13 @@ int main()
         rt[i] = b[i];
     }
 
-    printf("Masukkan time quantum ");
+    printf("Masukkan time quantum : ");
     scanf("%d", &tq);
 
-    printf("\n\nProcess\tTurnaround time\tWaiting time\n\n");
+    // Header tabel
+    printf("\n+---------+------------------+--------------+\n");
+    printf("| Process | Turnaround Time  | Waiting Time |\n");
+    printf("+---------+------------------+--------------+\n");
 
     for(time = 0, i = 0; remain != 0; )
     {
@@ -41,10 +44,16 @@ int main()
         if(rt[i] == 0 && flag == 1)
         {
             remain--;
-            printf("P[%d]\t\t%d\t\t%d\n", i + 1, time - AT[i], time - AT[i] - b[i]);
 
-            TotWT += time - AT[i] - b[i];
-            TotTA += time - AT[i];
+            int TAT = time - AT[i];
+            int WT  = time - AT[i] - b[i];
+
+            // Cetak baris tabel
+            printf("|  P[%d]   |        %2d        |      %2d      |\n",
+                   i + 1, TAT, WT);
+
+            TotWT += WT;
+            TotTA += TAT;
             flag = 0;
         }
 
@@ -55,6 +64,9 @@ int main()
         else
             i = 0;
     }
+
+    // Footer tabel
+    printf("+---------+------------------+--------------+\n");
 
     printf("\nAverage Waiting Time = %f\n", TotWT * 1.0 / n);
     printf("Average Turnaround Time = %f\n", TotTA * 1.0 / n);
